@@ -130,14 +130,41 @@ public class TaskManager {
     }
 
 
-    // ///////////// DELETE /////////////
+ // ///////////// DELETE /////////////
     private static void deleteTask() {
-    
+        Task task = findTaskById();
+        if (task == null) return;
+
+        System.out.print("Delete '" + task.getTitle() + "'? (y/n): ");
+        String confirm = scanner.nextLine().trim().toLowerCase();
+        if (confirm.equals("y")) {
+            tasks.remove(task);
+            System.out.println("Deleted task " + task.getId() + ".");
+        } else {
+            System.out.println("Cancelled.");
+        }
     }
 
     // ///////////// Helpers /////////////
     private static Task findTaskById() {
-    
+        if (tasks.isEmpty()) {
+            System.out.println("No tasks available.");
+            return null;
+        }
+        System.out.print("Task ID: ");
+        String input = scanner.nextLine().trim();
+        int id;
+        try {
+            id = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid ID.");
+            return null;
+        }
+        for (Task t : tasks) {
+            if (t.getId() == id) return t;
+        }
+        System.out.println("No task with ID " + id + ".");
+        return null;
     }
 
     private static boolean isValidStatus(String status) {
