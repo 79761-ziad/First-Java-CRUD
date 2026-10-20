@@ -93,15 +93,42 @@ public class TaskManager {
     }
     }
 
-    // ///////////// READ /////////////
+   // ///////////// READ /////////////
     private static void listTasks() {
-  
+        if (tasks.isEmpty()) {
+            System.out.println("No tasks yet.");
+            return;
+        }
+        System.out.println("--- Tasks ---");
+        for (Task t : tasks) {
+            System.out.println(t);
+        }
     }
 
     // ///////////// UPDATE /////////////
     private static void updateTask() {
-    
+        Task task = findTaskById();
+        if (task == null) return;
+
+        System.out.print("New title (leave blank to keep '" + task.getTitle() + "'): ");
+        String title = scanner.nextLine().trim();
+        if (!title.isEmpty()) {
+            task.setTitle(title);
+        }
+
+        System.out.print("New status (leave blank to keep '" + task.getStatus() + "'): ");
+        String status = scanner.nextLine().trim().toUpperCase();
+        if (!status.isEmpty()) {
+            if (isValidStatus(status)) {
+                task.setStatus(status);
+            } else {
+                System.out.println("Invalid status. Status unchanged.");
+            }
+        }
+
+        System.out.println("Updated: " + task);
     }
+
 
     // ///////////// DELETE /////////////
     private static void deleteTask() {
