@@ -72,7 +72,25 @@ public class TaskManager {
 
     // ///////////// CREATE /////////////
     private static void createTask() {
-    
+              private static void createTask() {
+        System.out.print("Title: ");
+        String title = scanner.nextLine().trim();
+        if (title.isEmpty()) {
+            System.out.println("Title cannot be empty.");
+            return;
+        }
+
+        System.out.print("Status (TODO/DOING/DONE): ");
+        String status = scanner.nextLine().trim().toUpperCase();
+        if (!isValidStatus(status)) {
+            System.out.println("Invalid status. Task not created.");
+            return;
+        }
+
+        Task task = new Task(title, status);
+        tasks.add(task);
+        System.out.println("Created: " + task);
+    }
     }
 
     // ///////////// READ /////////////
